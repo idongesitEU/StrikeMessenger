@@ -1,0 +1,224 @@
+<html>
+
+<head>
+
+
+	<script>
+		const publicKey = "PUBLIC_KEY";
+		const version = "1.0";
+
+
+		function doSend() {
+
+			const messageData = {
+				privateKey: document.getElementById ("key"). value,
+				publicKey: publicKey,
+				message: document.getElementById ("text"). value,
+				version: version,
+				protocol: "send"
+			};
+
+			let ipData = new XMLHttpRequest();
+			const url = "https://script.google.com/macros/s/AKfycbwvPlB6U6Q4WzVIxRTGV2nxgFkSyZjThfCmHweC_zco6WRpMIF_wtQs57CnKCGDJUZk/exec";
+
+			ipData.open("POST", url);
+
+			ipData.onreadystatechange = function () {
+				if (ipData.readyState === 4) {
+					console.log(ipData.status);
+					window.alert(JSON.parse(ipData.responseText));
+					document.getElementById("text"). value = null;
+					chatHistory();
+				}};
+
+			/* let hackedIp ={ privateKey: "ca17c2fac502425fc2bdd6e711d7053d043d51aca4bf1200a0525010154724cd",
+                 publicKey: "f20180075104c1a2de12c6112eadca11a61b0863f726ac00fb747a4a267dada2",
+                 message: "The all new ", version: "1.0",
+                 protocol: "send" };*/
+
+			function getFormData(object) {
+				const formData = new FormData();
+				Object.keys(object).forEach(key => formData.append(key, object[key]));
+				return formData;
+			}
+			const submit = getFormData(messageData);
+			//console.log(submit);
+			ipData.send(submit);
+
+		}
+
+	</script>
+
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		header {
+			padding: 0.5px;
+			text-align: center;
+			background-color: #e6e8ed;
+			color: blue;
+			font-size: 15px;
+			position: sticky;
+			top: 0;
+		}
+	</style>
+	<!--Style text area-->
+
+	<style>
+		.message {
+			width: 95%;
+			padding: 5px;
+			margin: 0px 0px;
+			box-sizing: border-box;
+			border: 1px solid white;
+			font-size: 20px;
+
+		}
+
+
+	}
+</style>
+
+<!--style placeholder-->
+<style>
+	::-webkit-input-placeholder {
+		/* Edge */
+		color: green;
+	}
+
+:-ms-input-placeholder {
+		/* Internet Explorer 10-11 */
+		color: green;
+	}
+
+	::placeholder {
+		color: green;
+	}
+</style>
+
+<title>CHAT MESSENGER</title>
+</head>
+<body style="background-color :#0a3df5  ;">
+<header onclick="chatHistory() ;">
+<h1>Google Messager </h1>
+</header>
+<nav>
+<div style="height: 25px; ">
+
+</div>
+</nav>
+<section>
+<div style=" width:100%;text-align:center;display :flex;justify-content:center;">
+
+<div id="chat" style="height:450px;width:98%;border:2px solid white;border-radius:25px;font-size:16px Arial, Serif;overflow:scroll;">
+<center>
+<div style="width:100%;background-color:blue">
+loading.......
+<!----Recent messages goes here----->
+</div>
+</center>
+</div>
+</div>
+<div style="display:flex;justify-content: right ;margin:7 24px;">
+
+<button onclick="doSend();" style="height: 40px;width:70px;color:black;background-color: white;border: 2px solid green;
+border-radius:13px;font-size:16px">
+SEND
+</button>
+</div>
+
+<!--create message section-->
+
+<div style="font-size:160px Arial, Serif;overflow:auto;">
+</div
+<form id="message">
+
+<textarea
+class="message"
+name="Message"
+
+id="text"
+placeholder="Enter your message here"
+align="left"
+cols="28"
+rows="auto"
+style="
+font-size:160px Arial, Serif;"
+>
+
+</textarea>
+<input id="key" style="height: 15px;margin:10px;font-size: 10px" placeholder="your message key" class="message" name="key" type="text" />
+</form>
+</div>
+</div>
+</section>
+
+<script>
+document.getElementById ("text").value = null;
+document.getElementById ("key").value = "PRIVATE_KEY";
+
+//	const publicKey="78d0a611b12a0b5427d56daca0cb10712e28ca7f1b15aaeca06568010c0c562c";
+//	const version="1.0";
+const url = "https://script.google.com/macros/s/AKfycbwvPlB6U6Q4WzVIxRTGV2nxgFkSyZjThfCmHweC_zco6WRpMIF_wtQs57CnKCGDJUZk/exec";
+
+function getFormData(object) {
+const formData = new FormData();
+Object.keys(object).forEach(key => formData.append(key, object[key]));
+return formData;
+};
+function mintChat(json) {
+//mint chat
+const color = {
+"78d0a611b12a0b5427d56daca0cb10712e28ca7f1b15aaeca06568010c0c562c": "#7371e3",
+"f20180075104c1a2de12c6112eadca11a61b0863f726ac00fb747a4a267dada2": "#9190d4"
+};
+//console.log (json)
+json = JSON. parse(json); //console.log (json)
+
+const template = `<div style="background-color:&colspan;color:white;width:100%" ><br>&nbsp;&nbsp;&textspan;</div>`;
+var chat = "";
+chat += "<br/><br/><br/>"
+for (let x = 1; x < json[0].length; x++) {
+chat += template. replace ("&colspan", color[json[1][x]]). replace ("&textspan;", json[0][x]);
+// console.log(color[json[1][x]])
+};
+chat += "<br/><br/><br/>"
+document.getElementById("chat").innerHTML = chat;
+//	console.log (chat);
+
+
+}
+function chatHistory() {
+
+const scrollToBottom = (id) => {
+const element = document.getElementById(id);
+element.scrollTop = element.scrollHeight;
+};
+const p = document.getElementById ("key"). value
+// console.log(p);
+const sendData = {
+privateKey: p,
+publicKey: "PUBLIC_KEY",
+protocol: "history"
+};
+xhttp = new XMLHttpRequest();
+xhttp.open("POST", url);
+xhttp.onreadystatechange = function () {
+if (xhttp.readyState == 4) {
+mintChat(xhttp.responseText);
+const element = document.getElementById("chat");
+let x = element.scrollHeight;
+let y = element.scrollWidth; //console.log(x)
+element.scrollTop += x;
+
+}
+};
+xhttp.send(getFormData(sendData));
+
+}
+chatHistory();
+
+</script>
+</body>
+</html>
